@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faLinkedin, faFacebook } from "@fortawesome/free-brands-svg-icons";
@@ -16,15 +17,12 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-border bg-bg-secondary">
-      {/* oversized clipped wordmark — bleeds off the edge, deliberately not centered/contained */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-10 -right-6 select-none bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text font-heading text-[7rem] font-bold leading-none text-transparent opacity-[0.07] sm:text-[10rem] lg:-bottom-16 lg:text-[14rem]"
-      >
-        DIGIFUNDAS
-      </div>
+      {/* ambient gradient wash — replaces flat bg-bg-secondary with actual depth */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg-primary via-bg-secondary to-bg-secondary" />
+      <div className="pointer-events-none absolute -left-32 top-0 h-80 w-80 rounded-full bg-accent-primary/[0.06] blur-[120px]" />
+      <div className="pointer-events-none absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-accent-secondary/[0.06] blur-[120px]" />
 
-      {/* diagonal line texture, single corner, faded via mask so it doesn't read as a flat pattern */}
+      {/* diagonal line texture, single corner */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-0 top-0 h-72 w-72 opacity-[0.08]"
@@ -36,13 +34,27 @@ export default function Footer() {
         }}
       />
 
+      {/* oversized wordmark — desktop/tablet only, hidden on mobile where it can't fit without clipping */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-4 -right-2 hidden max-w-full select-none overflow-hidden bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text font-heading font-bold leading-none text-transparent opacity-[0.08] sm:block"
+        style={{ fontSize: "clamp(2.5rem, 12vw, 8rem)", whiteSpace: "nowrap" }}
+      >
+        THEDIGIFUNDAS
+      </div>
+
       <Container className="relative py-16 sm:py-20">
         <div className="grid gap-12 text-left lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
           {/* Brand column */}
           <div>
-            <span className="font-heading text-xl font-bold text-text-primary">
-              The Digi <span className="text-accent-primary">Fundas</span>
-            </span>
+            {/* Replace src with your actual logo path — same one used in Navbar.tsx */}
+            <Image
+              src="/logo.png"
+              alt="The Digi Fundas"
+              width={160}
+              height={48}
+              className="h-10 w-auto object-contain"
+            />
             <p className="mt-4 max-w-xs font-body text-sm text-text-secondary">
               Helping businesses build stronger brands, sharper marketing, and
               digital experiences designed for long-term growth.
@@ -99,14 +111,19 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 text-left sm:flex-row sm:items-center sm:justify-between sm:text-left">
+        {/* Bottom bar — now includes legal links */}
+        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 text-left sm:flex-row sm:items-center sm:justify-between">
           <p className="font-body text-xs text-text-secondary">
             © {year} The Digi Fundas. All rights reserved.
           </p>
-          <p className="font-body text-xs text-text-secondary">
-            Designed & built with intent.
-          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link href="/terms" className="font-body text-xs text-text-secondary transition-colors hover:text-accent-primary">
+              Terms & Conditions
+            </Link>
+            <Link href="/privacy" className="font-body text-xs text-text-secondary transition-colors hover:text-accent-primary">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </Container>
     </footer>
