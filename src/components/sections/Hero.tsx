@@ -17,7 +17,7 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-bg-primary pt-12 pb-20  sm:pt-16 sm:pb-28">
       <ParticleBackground />
 
-      <Container className="relative z-10">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
           {/* Left: copy */}
           <div>
@@ -63,14 +63,14 @@ export default function Hero() {
           </div>
 
           {/* Right: founder image */}
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md lg:max-w-none">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md lg:max-w-lg">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/10 blur-2xl" />
             <div className="relative h-full w-full overflow-hidden rounded-3xl border border-border">
               <Image
                 src="/founder.jpg"
                 alt="Founder of The Digi Fundas"
                 fill
-                sizes="(max-width: 1024px) 90vw, 500px"
+                sizes="(max-width: 1024px) 90vw, (max-width: 1536px) 500px, 620px"
                 className="object-cover"
                 priority
               />
