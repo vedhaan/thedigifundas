@@ -17,7 +17,7 @@ export default function FeaturedWork() {
 
   return (
     <Section id="work" bgSecondary>
-      <Container>
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="max-w-xl">
           <span className="font-heading text-sm font-semibold uppercase tracking-wider text-accent-primary">
             Featured Work

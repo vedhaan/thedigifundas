@@ -11,7 +11,7 @@ export default function WhyUs() {
         <div className="absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-accent-secondary/10 blur-[120px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="max-w-2xl">
           <span className="font-heading text-sm font-semibold uppercase tracking-wider text-accent-primary">
             Why Businesses Work With Us

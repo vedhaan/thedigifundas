@@ -43,7 +43,7 @@ export default function Footer() {
         THEDIGIFUNDAS
       </div>
 
-      <Container className="relative py-16 sm:py-20">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px] py-16 sm:py-20">
         <div className="grid gap-12 text-left lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
           {/* Brand column */}
           <div>

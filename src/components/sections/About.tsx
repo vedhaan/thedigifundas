@@ -19,7 +19,7 @@ const pillars = [
 export default function About() {
   return (
     <Section id="about">
-      <Container>
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
           {/* Left: heading + copy */}
           <div>

@@ -27,7 +27,7 @@ export default function Insights() {
       />
       <div className="pointer-events-none absolute -right-40 top-0 h-96 w-96 rounded-full bg-accent-primary/10 blur-[140px]" />
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="max-w-2xl">
           <span className="font-heading text-sm font-semibold uppercase tracking-wider text-accent-primary">
             Insights

@@ -43,7 +43,7 @@ export default function Navbar() {
                         : "bg-bg-primary border-b border-border"
                     }`}
             >
-                <Container>
+                <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
                     <nav className="flex items-center justify-between py-4">
                         <Link href="/" className="relative h-11 w-30 shrink-0">
                             <Image

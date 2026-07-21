@@ -11,7 +11,7 @@ export default function SelectedCollaborations() {
 
   return (
     <Section bgSecondary>
-      <Container>
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-heading text-3xl font-bold text-text-primary sm:text-4xl">
             Trusted by{" "}

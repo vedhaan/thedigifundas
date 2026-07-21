@@ -14,7 +14,7 @@ export default function ImpactNumbers() {
         <div className="absolute -right-40 top-0 h-72 w-72 rounded-full bg-accent-secondary/10 blur-[100px]" />
       </div>
 
-      <Container className="relative">
+     <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="max-w-xl">
           <h2 className="font-heading text-3xl font-bold text-text-primary sm:text-4xl">
             Results That Reflect Our{" "}

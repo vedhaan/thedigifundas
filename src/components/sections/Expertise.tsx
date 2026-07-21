@@ -14,7 +14,7 @@ export default function Expertise() {
 
   return (
     <Section id="expertise" bgSecondary>
-      <Container>
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="mx-auto max-w-2xl text-center">
           <span className="font-heading text-sm font-semibold uppercase tracking-wider text-accent-primary">
             Our Expertise
