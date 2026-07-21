@@ -14,7 +14,7 @@ export default function WhyChooseUs() {
         <div className="absolute -left-32 top-10 h-96 w-96 rounded-full bg-accent-primary/[0.06] blur-[130px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

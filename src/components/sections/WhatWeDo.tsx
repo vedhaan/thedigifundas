@@ -11,7 +11,7 @@ import { services } from "@/lib/constants/services";
 export default function WhatWeDo() {
   return (
     <Section id="what-we-do">
-      <Container>
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

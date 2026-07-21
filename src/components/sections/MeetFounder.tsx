@@ -23,7 +23,7 @@ export default function MeetFounder() {
         <div className="absolute -left-32 bottom-0 h-80 w-80 rounded-full bg-accent-secondary/[0.05] blur-[110px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

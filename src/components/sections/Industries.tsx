@@ -12,7 +12,7 @@ export default function Industries() {
         <div className="absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-primary/[0.05] blur-[140px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

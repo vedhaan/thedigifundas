@@ -28,7 +28,7 @@ export default function OurStory() {
         <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-accent-primary/[0.05] blur-[100px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

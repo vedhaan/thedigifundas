@@ -68,7 +68,7 @@ export default function ImpactAchievements() {
         <div className="absolute left-1/2 top-0 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-accent-primary/[0.06] blur-[140px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

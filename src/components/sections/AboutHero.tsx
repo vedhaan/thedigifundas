@@ -8,7 +8,7 @@ export default function AboutHero() {
         <div className="absolute left-1/2 top-0 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-gradient-to-br from-accent-primary/10 to-accent-secondary/5 blur-[130px]" />
       </div>
 
-      <Container className="relative">
+      <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
         <div className="mx-auto max-w-4xl text-center">
           <span className="font-heading text-sm font-semibold uppercase tracking-wider text-accent-primary">
             About The Digi Fundas
