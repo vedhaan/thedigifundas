@@ -54,10 +54,10 @@ export default function About() {
           {/* Right: quote callout card, same glow treatment as Hero's image */}
           <div className="relative">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/10 blur-2xl" />
-            <div className="relative rounded-3xl border border-border bg-bg-secondary p-8 sm:p-10">
+            <div className="relative rounded-3xl border border-border bg-bg-secondary p-12 sm:p-10">
               <FontAwesomeIcon
                 icon={faQuoteLeft}
-                className="h-8 w-8 text-accent-primary/40"
+                className="text-3xl text-accent-primary/40"
               />
               <p className="mt-6 font-heading text-2xl font-semibold leading-snug text-text-primary sm:text-3xl">
                 Whether you&apos;re launching a new venture, strengthening an
@@ -75,10 +75,10 @@ export default function About() {
         <div className="mt-16 flex flex-wrap justify-center gap-x-10 gap-y-8 border-t border-border pt-10 sm:gap-x-14">
           {pillars.map((pillar) => (
             <div key={pillar.title} className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-bg-secondary border border-border text-accent-primary">
-                <FontAwesomeIcon icon={pillar.icon} className="h-4 w-4" />
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-bg-secondary border border-border text-accent-primary">
+                <FontAwesomeIcon icon={pillar.icon} className="h-6 w-6 text-xl" />
               </span>
-              <span className="font-heading text-sm font-semibold text-text-primary sm:text-base">
+              <span className="font-heading text-sm font-semibold text-text-primary sm:text-xl">
                 {pillar.title}
               </span>
             </div>

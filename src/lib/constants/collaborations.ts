@@ -1,10 +1,10 @@
-// Replace `src` with the real path to each logo file, placed in /public/logos/.
-// `name` is used for the alt text (accessibility + SEO) — use the real client/brand name.
 export const collaborations = [
-  { name: "Client Name 1", src: "/logos/client-1.png" },
-  { name: "Client Name 2", src: "/logos/client-2.png" },
-  { name: "Client Name 3", src: "/logos/client-3.png" },
-  { name: "Client Name 4", src: "/logos/client-4.png" },
-  { name: "Client Name 5", src: "/logos/client-5.png" },
-  { name: "Client Name 6", src: "/logos/client-6.png" },
+  { name: "Filliate", src: "/client/Filiate.avif" },
+  { name: "Haus of Hetal", src: "/client/Haus_of_Hetal.png" },
+  { name: "Housetalk Designs", src: "/client/Housetalk Designs.png" },
+  { name: "iblossom", src: "/client/iblossom2.png" },
+  { name: "Koncept Kart", src: "/client/Koncept.png" },
+  { name: "Koncept Print", src: "/client/Koncept_Print.jpeg" },
+  { name: "Mishthi Art", src: "/client/Mishthi_Art_Logo.png" },
+  { name: "Moon", src: "/client/Moon_Logo2.png" },
 ];
