@@ -39,8 +39,8 @@ export default function Navbar() {
         <>
             <header
                 className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${isTransparent
-                        ? "bg-transparent border-b border-transparent"
-                        : "bg-bg-primary border-b border-border"
+                    ? "bg-transparent border-b border-transparent"
+                    : "bg-bg-primary border-b border-border"
                     }`}
             >
                 <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px]">
@@ -78,16 +78,24 @@ export default function Navbar() {
                                 </button>
 
                                 <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                                    <div className="grid grid-cols-2 gap-2 rounded-2xl border border-border bg-bg-secondary p-6 shadow-xl w-[480px]">
-                                        {services.map((service) => (
-                                            <Link
-                                                key={service.href}
-                                                href={service.href}
-                                                className="rounded-lg px-4 py-3 text-sm text-text-secondary hover:bg-bg-primary hover:text-accent-primary transition-colors"
-                                            >
-                                                {service.label}
-                                            </Link>
-                                        ))}
+                                    <div className="rounded-2xl border border-border bg-bg-secondary p-6 shadow-xl w-[480px]">
+                                        <Link
+                                            href="/services"
+                                            className="mb-2 block rounded-lg border-b border-border px-4 pb-4 pt-1 font-heading text-sm font-bold text-accent-primary hover:text-accent-secondary transition-colors"
+                                        >
+                                            All Services →
+                                        </Link>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {services.map((service) => (
+                                                <Link
+                                                    key={service.href}
+                                                    href={service.href}
+                                                    className="rounded-lg px-4 py-3 text-sm text-text-secondary hover:bg-bg-primary hover:text-accent-primary transition-colors"
+                                                >
+                                                    {service.label}
+                                                </Link>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -167,6 +175,13 @@ export default function Navbar() {
                                                 exit={{ height: 0, opacity: 0 }}
                                                 className="overflow-hidden pl-4"
                                             >
+                                                <Link
+                                                    href="/services"
+                                                    onClick={() => setMobileOpen(false)}
+                                                    className="block border-b border-border py-2 pb-3 text-sm font-bold text-accent-primary"
+                                                >
+                                                    All Services →
+                                                </Link>
                                                 {services.map((service) => (
                                                     <Link
                                                         key={service.href}
