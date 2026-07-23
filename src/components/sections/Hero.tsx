@@ -67,7 +67,7 @@ export default function Hero() {
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/10 blur-2xl" />
             <div className="relative h-full w-full overflow-hidden rounded-3xl border border-border">
               <Image
-                src="/founder.jpg"
+                src="/charanjeet.jpeg"
                 alt="Founder of The Digi Fundas"
                 fill
                 sizes="(max-width: 1024px) 90vw, (max-width: 1536px) 500px, 620px"

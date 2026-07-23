@@ -1,9 +1,13 @@
-import ServiceHero from "@/components/sections/ServicesHero";
+import ServicesHero from "@/components/sections/ServicesHero";
+import OurExpertise from "@/components/sections/OurExpertise";
+import OurProcess from "@/components/sections/OurProcess";
 
 export default function ServicesPage() {
   return (
     <main>
-      <ServiceHero />
+      <ServicesHero />
+      <OurExpertise />
+      <OurProcess />
     </main>
   );
 }

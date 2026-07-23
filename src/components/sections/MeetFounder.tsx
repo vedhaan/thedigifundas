@@ -55,7 +55,7 @@ export default function MeetFounder() {
               <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-accent-primary/20 to-accent-secondary/10 blur-2xl" />
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-border">
                 <Image
-                  src="/founder.jpg"
+                  src="/charanjeet.jpg"
                   alt="Charanjeet Kaur, Founder of The Digi Fundas"
                   fill
                   sizes="(max-width: 1024px) 90vw, 480px"
