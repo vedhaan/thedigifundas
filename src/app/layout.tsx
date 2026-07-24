@@ -26,6 +26,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      
       <body className={`${sora.variable} ${inter.variable} antialiased`}>
         <Navbar />
         <div className="pt-20">{children}</div>
