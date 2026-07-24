@@ -47,7 +47,7 @@ export default function Navbar() {
                     <nav className="flex items-center justify-between py-4">
                         <Link href="/" className="relative h-11 w-30 shrink-0">
                             <Image
-                                src="/logo.png"
+                                src="/icon.png"
                                 alt="The Digi Fundas"
                                 fill
                                 sizes="260px"

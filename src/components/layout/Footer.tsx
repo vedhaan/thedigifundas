@@ -49,7 +49,7 @@ export default function Footer() {
           <div>
             {/* Replace src with your actual logo path — same one used in Navbar.tsx */}
             <Image
-              src="/logo.png"
+              src="/icon.png"
               alt="The Digi Fundas"
               width={160}
               height={48}
