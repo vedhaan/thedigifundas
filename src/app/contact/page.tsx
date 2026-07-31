@@ -1,7 +1,21 @@
+import ContactHero from "@/components/sections/ContactHero";
+import ContactForm from "@/components/sections/ContactForm";
+import ServicesWeHelpWith from "@/components/sections/ServicesWeHelpWith";
+import OtherWaysToConnect from "@/components/sections/OtherWaysToConnect";
+import WhyChooseUsReel from "@/components/sections/WhyChooseUsReel";
+import ContactFAQ from "@/components/sections/ContactFAQ";
+import ContactFinalCta from "@/components/sections/ContactFinalCta";
+
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-bg-primary text-text-primary flex items-center justify-center pt-24">
-      <p className="font-heading text-2xl text-text-secondary">Contact — Coming Soon</p>
+    <main>
+      <ContactHero />
+      <ContactForm />
+      <ServicesWeHelpWith />
+      <OtherWaysToConnect />
+      <WhyChooseUsReel />
+      <ContactFAQ />
+      <ContactFinalCta />
     </main>
   );
 }
