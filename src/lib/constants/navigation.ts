@@ -3,6 +3,7 @@ export const services = [
   // { label: "Social Media Management", href: "/services/social-media-management" },
   { label: "E-commerce Website", href: "/services/ecommerce-website-development" },
   { label: "Business Website", href: "/services/business-website-development" },
+  { label: "AI Solutions", href: "/services/ai-solutions" },
   { label: "Meta Ads Management", href: "/services/meta-ads-management" },
   { label: "Google Ads Management", href: "/services/google-ads-management" },
   { label: "Email Marketing", href: "/services/email-marketing" },
