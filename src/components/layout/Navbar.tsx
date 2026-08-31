@@ -83,52 +83,80 @@ export default function Navbar() {
                                 </button>
 
                                 <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
-                                    <div className="w-[560px] overflow-hidden rounded-2xl border border-border bg-bg-secondary shadow-xl">
-                                        <div className="grid grid-cols-[1fr_180px]">
+                                    <motion.div
+                                        initial={false}
+                                        className="w-[580px] overflow-hidden rounded-3xl border border-border bg-bg-secondary/95 shadow-2xl shadow-black/40 backdrop-blur-xl"
+                                    >
+                                        <div className="grid grid-cols-[1fr_190px]">
                                             {/* main services column */}
                                             <div className="p-6">
                                                 <Link
                                                     href="/services"
-                                                    className="mb-2 block rounded-lg border-b border-border px-4 pb-4 pt-1 font-heading text-sm font-bold text-accent-primary hover:text-accent-secondary transition-colors"
+                                                    className="group/all mb-3 flex items-center justify-between rounded-xl px-3 py-3 font-heading text-sm font-bold text-accent-primary transition-colors hover:bg-accent-primary/5"
                                                 >
-                                                    All Services →
+                                                    All Services
+                                                    <span className="transition-transform duration-200 group-hover/all:translate-x-1">→</span>
                                                 </Link>
                                                 <div className="grid grid-cols-2 gap-1">
-                                                    {flatServices.map((service) => (
-                                                        <Link
+                                                    {flatServices.map((service, i) => (
+                                                        <motion.div
                                                             key={service.href}
-                                                            href={service.href!}
-                                                            className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm text-text-secondary hover:bg-bg-primary hover:text-accent-primary transition-colors"
+                                                            initial={{ opacity: 0, y: 6 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            transition={{ duration: 0.25, delay: i * 0.03 }}
                                                         >
-                                                            <FontAwesomeIcon icon={service.icon} className="h-3.5 w-3.5 shrink-0 opacity-60" />
-                                                            {service.label}
-                                                        </Link>
+                                                            <Link
+                                                                href={service.href!}
+                                                                className="group/item flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm text-text-secondary transition-all duration-200 hover:translate-x-0.5 hover:bg-accent-primary/[0.06] hover:text-accent-primary"
+                                                            >
+                                                                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-bg-primary text-text-secondary/70 transition-colors duration-200 group-hover/item:bg-accent-primary group-hover/item:text-bg-primary">
+                                                                    <FontAwesomeIcon icon={service.icon} className="h-3 w-3" />
+                                                                </span>
+                                                                {service.label}
+                                                            </Link>
+                                                        </motion.div>
                                                     ))}
                                                 </div>
                                             </div>
 
-                                            {/* Digital Marketing — distinct sidebar column */}
+                                            {/* Digital Marketing — soft gradient wash, not a flat hard-lined block */}
                                             {digitalMarketingItem?.children && (
-                                                <div className="flex flex-col gap-1 border-l border-border bg-bg-primary/40 p-4">
-                                                    <span className="mb-1 px-2 font-heading text-[10px] font-bold uppercase tracking-widest text-accent-primary">
+                                                <div className="relative flex flex-col gap-1 p-4">
+                                                    <div
+                                                        className="pointer-events-none absolute inset-0"
+                                                        style={{
+                                                            background: "linear-gradient(180deg, rgba(255,138,0,0.06) 0%, transparent 60%)",
+                                                        }}
+                                                    />
+                                                    <div className="pointer-events-none absolute inset-y-3 left-0 w-px bg-gradient-to-b from-transparent via-border to-transparent" />
+
+                                                    <span className="relative mb-1 px-2 font-heading text-[10px] font-bold uppercase tracking-widest text-accent-primary">
                                                         Digital Marketing
                                                     </span>
-                                                    {digitalMarketingItem.children.map((child) => (
-                                                        <Link
+                                                    {digitalMarketingItem.children.map((child, i) => (
+                                                        <motion.div
                                                             key={child.href}
-                                                            href={child.href}
-                                                            className="group/item flex flex-col gap-0.5 rounded-lg px-2.5 py-2.5 transition-colors hover:bg-bg-secondary"
+                                                            initial={{ opacity: 0, y: 6 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            transition={{ duration: 0.25, delay: 0.1 + i * 0.05 }}
                                                         >
-                                                            <span className="flex items-center gap-2 text-xs font-semibold text-text-primary group-hover/item:text-accent-primary">
-                                                                <FontAwesomeIcon icon={child.icon} className="h-3 w-3 shrink-0" />
-                                                                {child.shortLabel}
-                                                            </span>
-                                                        </Link>
+                                                            <Link
+                                                                href={child.href}
+                                                                className="group/child relative flex items-center gap-2.5 rounded-xl px-2.5 py-2.5 transition-all duration-200 hover:translate-x-0.5 hover:bg-bg-primary/80"
+                                                            >
+                                                                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-accent-primary/10 text-accent-primary transition-colors duration-200 group-hover/child:bg-accent-primary group-hover/child:text-bg-primary">
+                                                                    <FontAwesomeIcon icon={child.icon} className="h-3 w-3" />
+                                                                </span>
+                                                                <span className="text-xs font-semibold text-text-primary transition-colors duration-200 group-hover/child:text-accent-primary">
+                                                                    {child.shortLabel}
+                                                                </span>
+                                                            </Link>
+                                                        </motion.div>
                                                     ))}
                                                 </div>
                                             )}
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 </div>
                             </div>
                         </div>
@@ -238,9 +266,8 @@ export default function Navbar() {
                                                             {digitalMarketingItem.label}
                                                             <ChevronDown
                                                                 size={16}
-                                                                className={`transition-transform ${
-                                                                    mobileSubOpen === digitalMarketingItem.label ? "rotate-180" : ""
-                                                                }`}
+                                                                className={`transition-transform ${mobileSubOpen === digitalMarketingItem.label ? "rotate-180" : ""
+                                                                    }`}
                                                             />
                                                         </button>
                                                         <AnimatePresence>

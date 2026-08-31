@@ -10,6 +10,7 @@ import {
   faMagnifyingGlass, faEnvelopeOpenText, faPenNib, faPalette,
   faSpa, faShirt, faStore,
 } from "@fortawesome/free-solid-svg-icons";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export const services: ServiceItem[] = [
   { label: "Social Media Marketing", href: "/services/social-media-marketing", icon: faShareNodes },
