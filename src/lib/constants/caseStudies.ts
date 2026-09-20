@@ -27,6 +27,7 @@ export type CaseStudy = {
   slug: string;
   clientName: string;
   category: string; // e.g. "Jewellery Brand • Performance Marketing + Social Media Management"
+  homepageImage: { src: string; alt: string }; // relative path to the homepage card image, e.g. "/images/case-studies/mishthi-art/homepage-card.jpg"
   homepageTitle: string;
   homepageSummary: string;
   homepageTags: string[]; // short badges shown on the homepage card, e.g. "17X ROAS"
@@ -48,6 +49,10 @@ export type CaseStudy = {
   }[];
   // Optional — only Moon Glow's source doc includes this section.
   businessImpact?: string;
+  showcaseImage?: {
+    src: string;
+    alt: string;
+  };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -58,6 +63,10 @@ export const caseStudies: CaseStudy[] = [
     homepageTitle: "Mishthi Art",
     homepageSummary:
       "From inconsistent orders to a more consistent daily sales engine through performance marketing, creative optimisation, and data-driven campaign strategy.",
+    homepageImage: {
+      src: "projects/mishthi_art/BlogInsights_Featured_Image_1200by750_px.png",
+      alt: "Mishthi Art"
+    },
     homepageTags: ["17X ROAS", "Consistent Daily Orders", "Stronger Social Engagement"],
     detailHeroTitle: "Turning Inconsistent Orders Into Consistent Growth.",
     detailHeroSubtitle: "Mishthi Art · Jewellery · Performance Marketing",
@@ -136,6 +145,10 @@ export const caseStudies: CaseStudy[] = [
       "Strengthened social media engagement and overall digital presence.",
       "Created a more structured optimisation process across campaigns, creatives, audiences, and formats.",
     ],
+    showcaseImage: {
+      src: "/projects/mishthi_art/showcase-1920x1080.png",
+      alt: "Mishthi Art campaign creative and social media content",
+    },
   },
   {
     slug: "moon-glow-beauty-studio-academy",
@@ -144,6 +157,10 @@ export const caseStudies: CaseStudy[] = [
     homepageTitle: "Moon Glow Beauty Studio & Academy",
     homepageSummary:
       "From struggling to attract new clients to generating salon walk-ins and student enquiries through a stronger local presence, social media marketing, and Meta Ads.",
+    homepageImage: {
+      src: "projects/moon-glow-beauty-studio-academy/homepage-card.jpg",
+      alt: "Moon Glow Beauty Studio & Academy"
+    },
     homepageTags: ["New Client Walk-ins", "Google Profile Optimisation", "Academy Student Acquisition"],
     detailHeroTitle: "From Local Visibility To Real-World Growth.",
     detailHeroSubtitle: "Moon Glow Beauty Studio & Academy · Salon · Local Marketing + Meta Ads",
@@ -201,6 +218,10 @@ export const caseStudies: CaseStudy[] = [
       "The Google Business Profile was optimised to improve local discoverability.",
       "Meta Ads helped the academy reach prospective students and begin acquiring students through paid social campaigns.",
     ],
+    showcaseImage: {
+      src: "projects/moon-glow-beauty-studio-academy/showcase-1920x1080.jpg",
+      alt: "Moon Glow Beauty Studio & Academy Google Business Profile and social media presence",
+    },
     businessImpact:
       "The engagement helped Moon Glow expand beyond relying on existing customers by creating two clear digital acquisition paths: local visibility and discovery for salon walk-ins, and paid social acquisition for the academy.",
   },

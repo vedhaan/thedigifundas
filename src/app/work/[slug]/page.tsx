@@ -6,8 +6,10 @@ import CaseStudyApproach from "@/components/sections/CaseStudyApproach";
 import CaseStudyPerformanceInsights from "@/components/sections/CaseStudyPerformanceInsights";
 import CaseStudyTransformation from "@/components/sections/CaseStudyTransformation";
 import CaseStudyResults from "@/components/sections/CaseStudyResults";
+import CaseStudyBusinessImpact from "@/components/sections/CaseStudyBusinessImpact";
+import CaseStudyFinalCta from "@/components/sections/CaseStudyFinalCta";
+import CaseStudyShowcase from "@/components/sections/CaseStudyShowcase";
 
-// Pre-render both real case studies at build time.
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
 }
@@ -28,10 +30,13 @@ export default async function CaseStudyPage({
     <main>
       <CaseStudyHero caseStudy={caseStudy} />
       <CaseStudyOverview caseStudy={caseStudy} />
+      <CaseStudyShowcase caseStudy={caseStudy} />
       <CaseStudyApproach caseStudy={caseStudy} />
       <CaseStudyPerformanceInsights caseStudy={caseStudy} />
       <CaseStudyTransformation caseStudy={caseStudy} />
       <CaseStudyResults caseStudy={caseStudy} />
+      <CaseStudyBusinessImpact caseStudy={caseStudy} />
+      <CaseStudyFinalCta />
     </main>
   );
 }

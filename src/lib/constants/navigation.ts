@@ -8,7 +8,7 @@ export type ServiceItem = {
 import {
   faShareNodes, faCartShopping, faBriefcase, faRobot, faBullseye,
   faMagnifyingGlass, faEnvelopeOpenText, faPenNib, faPalette,
-  faSpa, faShirt, faStore,
+  faClapperboard, faSpa, faShirt, faStore,
 } from "@fortawesome/free-solid-svg-icons";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
@@ -21,6 +21,7 @@ export const services: ServiceItem[] = [
   { label: "Google Ads Management", href: "/services/google-ads-management", icon: faMagnifyingGlass },
   { label: "Email Marketing", href: "/services/email-marketing", icon: faEnvelopeOpenText },
   { label: "Content Marketing", href: "/services/content-marketing", icon: faPenNib },
+  { label: "Content Creation", href: "/services/content-creation", icon: faClapperboard },
   { label: "Branding Design", href: "/services/branding-design", icon: faPalette },
   {
     label: "Digital Marketing",

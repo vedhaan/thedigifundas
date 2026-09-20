@@ -7,18 +7,23 @@ import "./globals.css";
 const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "The Digi Fundas | Digital Marketing Agency",
-  description: "Add your real meta description here — this matters for SEO, don't leave it generic.",
+  metadataBase: new URL("https://www.thedigifundas.com"),
+  title: "The Digi Fundas | Strategic Marketing, Branding & Website Development Agency",
+  description:
+    "Helping ambitious businesses grow through strategic marketing, branding, website development, content creation, paid advertising, and AI-powered solutions.",
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({

@@ -49,10 +49,7 @@ export default function FeaturedInsights() {
               {/* image placeholder — real creative/logo assets to be swapped
                   in per the source docs' "Website Team Notes" (avoid stock imagery) */}
               <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-gradient-to-br from-bg-secondary to-bg-primary">
-                <FontAwesomeIcon icon={faImage} className="h-8 w-8 text-text-secondary/20" />
-                <span className="absolute left-3 top-3 rounded-full bg-accent-primary px-2.5 py-1 font-heading text-[10px] font-bold uppercase tracking-wide text-bg-primary">
-                  {cs.category.split("•")[0].trim()}
-                </span>
+                <img src={cs.homepageImage} alt={cs.homepageTitle} className="h-full w-full object-cover" />
               </div>
 
               <div className="flex flex-1 flex-col p-6">

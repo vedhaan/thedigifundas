@@ -12,7 +12,7 @@ export const projects = [
     category: "Branding Projects",
     stat: "17X ROAS",
     outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/mishthi_art/homepage_1200x900.png",
+    image: "/projects/1.png",
     link: "#",
   },
   {

@@ -1,25 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Social Media Marketing Services | The Digi Fundas",
+  title: "Social Media Marketing Services For Growing Brands",
   description:
-    "Social media marketing agency helping businesses build brand presence, drive engagement, and grow through strategic content, management, and Instagram marketing services.",
-  keywords: [
-    "Social Media Marketing Services",
-    "Social Media Marketing Agency",
-    "Social Media Management Services",
-    "Instagram Marketing Agency",
-    "Social Media Marketing Company",
-    "Social Media Strategy Services",
-    "Content Creation Services",
-    "Social Media Marketing For Small Businesses",
-  ],
+    "Strategic social media marketing services including content creation, account management, engagement, and growth strategies.",
+  keywords: ["Social Media Marketing Services", "Instagram Marketing Agency", "Social Media Management"],
+  alternates: { canonical: "/services/social-media-marketing" },
 };
 
-export default function SocialMediaMarketingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return <>{children}</>;
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return children;
 }
