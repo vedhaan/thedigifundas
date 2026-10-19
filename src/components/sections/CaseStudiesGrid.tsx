@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,15 +9,84 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import { caseStudies } from "@/lib/constants/caseStudies";
 
-// Deterministic size pattern, not random. Scales as more real
-// case studies are added without breaking the layout math.
-const sizePattern = [
-  { colSpan: "lg:col-span-7", rowSpan: "lg:row-span-2", aspect: "aspect-[4/5]" },
-  { colSpan: "lg:col-span-5", rowSpan: "lg:row-span-1", aspect: "aspect-[4/3]" },
-];
-
 function normalizeImagePath(path: string) {
   return path.startsWith("/") ? path : `/${path}`;
+}
+
+type CaseStudy = (typeof caseStudies)[number];
+
+function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
+  const [failed, setFailed] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // onError can fire before hydration on SSR'd <img> and get missed.
+  // This catches images that already failed by the time React mounts.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="group overflow-hidden rounded-2xl border border-[#262626] bg-[#151515] transition-colors hover:border-[#FF8A00]/40"
+    >
+      <Link href={`/work/${study.slug}`} className="flex h-full flex-col">
+        {/* Image: native 4:3, never cropped, no text on top of it */}
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#1a1a1a]">
+          {failed ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-[#4d4d4d]">
+              <FontAwesomeIcon icon={faImage} className="h-8 w-8" />
+              <span className="font-body text-xs">Project image coming soon</span>
+            </div>
+          ) : (
+            <img
+              ref={imgRef}
+              src={normalizeImagePath(study.homepageImage.src)}
+              alt={study.homepageImage.alt}
+              onError={() => setFailed(true)}
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            />
+          )}
+        </div>
+
+        {/* Content: separate from the image, so nothing collides */}
+        <div className="flex flex-1 flex-col p-6 md:p-7">
+          {study.homepageTags && study.homepageTags.length > 0 && (
+            <div className="mb-3 flex flex-wrap gap-2">
+              {study.homepageTags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border border-[#FF8A00]/30 bg-[#FF8A00]/10 px-3 py-1 font-body text-[11px] font-medium uppercase tracking-wide text-[#FFB347]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <h3 className="font-heading text-xl font-semibold text-white md:text-2xl">
+            {study.homepageTitle}
+          </h3>
+
+          <p className="mt-2 line-clamp-3 font-body text-sm text-[#A3A3A3]">
+            {study.homepageSummary}
+          </p>
+
+          <span className="mt-auto inline-flex items-center gap-2 pt-5 font-body text-sm font-medium text-white transition-colors group-hover:text-[#FF8A00]">
+            View Case Study
+            <FontAwesomeIcon
+              icon={faArrowRight}
+              className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+            />
+          </span>
+        </div>
+      </Link>
+    </motion.div>
+  );
 }
 
 export default function CaseStudiesGrid() {
@@ -46,83 +116,10 @@ export default function CaseStudiesGrid() {
           </motion.p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 lg:auto-rows-[180px] lg:grid-cols-12">
-          {caseStudies.map((study, i) => {
-            const size = sizePattern[i % sizePattern.length];
-            const imageSrc = normalizeImagePath(study.homepageImage.src);
-
-            return (
-              <motion.div
-                key={study.slug}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className={`group relative overflow-hidden rounded-2xl border border-[#262626] bg-[#151515] ${size.colSpan} ${size.rowSpan}`}
-              >
-                <Link href={`/work/${study.slug}`} className="block h-full">
-                  <div
-                    className={`relative w-full overflow-hidden ${size.aspect} lg:h-full lg:aspect-auto`}
-                  >
-                    <img
-                      src={imageSrc}
-                      alt={study.homepageImage.alt}
-                      onError={(e) => {
-                        const target = e.currentTarget as HTMLImageElement;
-                        target.style.display = "none";
-                        const fallback = target.nextElementSibling as HTMLElement | null;
-                        if (fallback) fallback.style.display = "flex";
-                      }}
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
-                    />
-                    {/* Fallback, hidden by default, shown via onError above */}
-                    <div
-                      style={{ display: "none" }}
-                      className="absolute inset-0 flex-col items-center justify-center gap-3 bg-[#1a1a1a] text-[#4d4d4d]"
-                    >
-                      <FontAwesomeIcon icon={faImage} className="h-8 w-8" />
-                      <span className="font-body text-xs">
-                        Project image coming soon
-                      </span>
-                    </div>
-
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-[#0D0D0D]/20 to-transparent opacity-90" />
-                  </div>
-
-                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
-                    {study.homepageTags && study.homepageTags.length > 0 && (
-                      <div className="mb-3 flex flex-wrap gap-2">
-                        {study.homepageTags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full border border-[#FF8A00]/30 bg-[#FF8A00]/10 px-3 py-1 font-body text-[11px] font-medium uppercase tracking-wide text-[#FFB347]"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <h3 className="font-heading text-xl font-semibold text-white md:text-2xl">
-                      {study.homepageTitle}
-                    </h3>
-
-                    <p className="mt-2 line-clamp-2 font-body text-sm text-[#A3A3A3]">
-                      {study.homepageSummary}
-                    </p>
-
-                    <span className="mt-4 inline-flex items-center gap-2 font-body text-sm font-medium text-white transition-colors group-hover:text-[#FF8A00]">
-                      View Case Study
-                      <FontAwesomeIcon
-                        icon={faArrowRight}
-                        className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
-                      />
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
+        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
+          {caseStudies.map((study, i) => (
+            <CaseStudyCard key={study.slug} study={study} index={i} />
+          ))}
         </div>
       </Container>
     </Section>
