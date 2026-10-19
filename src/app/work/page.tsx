@@ -20,7 +20,7 @@ export default function WorkPage() {
           testimonials.ts still has duplicate "Client Name 3" entries
           in both arrays, placeholder quotes, and every videoUrl is null.
           Do not deploy this section live until testimonials.ts is real. */}
-      <ClientFeedback />
+      {/* <ClientFeedback /> */}
       <WorkFinalCta />
     </main>
   );

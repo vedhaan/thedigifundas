@@ -1,58 +1,23 @@
-export const categories = [
-  "All",
-  "Branding Projects",
-  "Digital Marketing Campaigns",
-  "Website Development Projects",
-  "Content Creation Campaigns",
-] as const;
+import { caseStudies } from "@/lib/constants/caseStudies";
 
-export const projects = [
-  {
-    title: "Project Title 1",
-    category: "Branding Projects",
-    stat: "17X ROAS",
-    outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/1.png",
-    link: "#",
-  },
-  {
-    title: "Project Title 2",
-    category: "Digital Marketing Campaigns",
-    stat: "300K+ Views",
-    outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/1.png",
-    link: "#",
-  },
-  {
-    title: "Project Title 3",
-    category: "Website Development Projects",
-    stat: "40% Faster Load",
-    outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/1.png",
-    link: "#",
-  },
-  {
-    title: "Project Title 4",
-    category: "Content Creation Campaigns",
-    stat: "2M+ Reach",
-    outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/1.png",
-    link: "#",
-  },
-  {
-    title: "Project Title 5",
-    category: "Branding Projects",
-    stat: "3X Engagement",
-    outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/1.png",
-    link: "#",
-  },
-  {
-    title: "Project Title 6",
-    category: "Digital Marketing Campaigns",
-    stat: "12X ROAS",
-    outcome: "Short one-line result/outcome goes here.",
-    image: "/projects/1.png",
-    link: "#",
-  },
+function withLeadingSlash(path: string) {
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
+// Built from caseStudies.ts so the homepage can never show data that
+// differs from the real case study pages.
+export const projects = caseStudies.map((cs) => ({
+  title: cs.homepageTitle,
+  category: cs.featuredWorkCategory,
+  stat: cs.homepageTags[0] ?? "",
+  outcome: cs.homepageSummary,
+  image: withLeadingSlash(cs.homepageImage.src),
+  link: `/work/${cs.slug}`,
+}));
+
+// Built only from categories that actually have projects, so a tab can
+// never lead to an empty grid.
+export const categories: string[] = [
+  "All",
+  ...Array.from(new Set(projects.map((p) => p.category))),
 ];

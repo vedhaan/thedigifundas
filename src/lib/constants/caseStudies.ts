@@ -1,15 +1,15 @@
 // Case study content sourced from client-provided documents:
-// "The Digi Fundas — Mishthi Art Case Study.docx" and
-// "The Digi Fundas — Moon Glow Case Study.docx"
+// "The Digi Fundas - Mishthi Art Case Study.docx" and
+// "The Digi Fundas - Moon Glow Case Study.docx"
 //
-// IMPORTANT — per the source documents' own "Website Team Notes":
+// IMPORTANT - per the source documents' own "Website Team Notes":
 // - Use real Mishthi Art / Moon Glow creative & product visuals wherever
 //   possible; avoid generic stock imagery once real assets are provided.
 // - Do NOT publish confidential ad-account info, customer data, spend
 //   limits, or screenshots containing sensitive information.
 // - Review and approve all performance figures internally before publish.
 // - Mishthi Art's stats include real numbers (17X, 4 Months). Moon Glow's
-//   headline stats are qualitative outcomes only — the source document
+//   headline stats are qualitative outcomes only - the source document
 //   does not provide numeric KPIs for Moon Glow. Do not invent numbers
 //   for Moon Glow to make it visually match Mishthi Art.
 
@@ -23,11 +23,19 @@ export type CaseStudyTransformationRow = {
   after: string;
 };
 
+// Drives the filter tabs on the homepage Featured Work section.
+export type FeaturedWorkCategory =
+  | "Branding Projects"
+  | "Digital Marketing Campaigns"
+  | "Website Development Projects"
+  | "Content Creation Campaigns";
+
 export type CaseStudy = {
   slug: string;
   clientName: string;
   category: string; // e.g. "Jewellery Brand • Performance Marketing + Social Media Management"
-  homepageImage: { src: string; alt: string }; // relative path to the homepage card image, e.g. "/images/case-studies/mishthi-art/homepage-card.jpg"
+  featuredWorkCategory: FeaturedWorkCategory;
+  homepageImage: { src: string; alt: string }; // 1200 x 900, absolute path starting with "/"
   homepageTitle: string;
   homepageSummary: string;
   homepageTags: string[]; // short badges shown on the homepage card, e.g. "17X ROAS"
@@ -41,13 +49,13 @@ export type CaseStudy = {
   approach: { title: string; description: string }[];
   transformation: CaseStudyTransformationRow[];
   results: string[];
-  // Optional — only Mishthi Art's source doc includes this section.
+  // Optional - only Mishthi Art's source doc includes this section.
   performanceInsights?: {
     label: string;
     dataPoint: string;
     interpretation: string;
   }[];
-  // Optional — only Moon Glow's source doc includes this section.
+  // Optional - only Moon Glow's source doc includes this section.
   businessImpact?: string;
   showcaseImage?: {
     src: string;
@@ -60,12 +68,13 @@ export const caseStudies: CaseStudy[] = [
     slug: "mishthi-art",
     clientName: "Mishthi Art",
     category: "Jewellery Brand • Performance Marketing + Social Media Management",
+    featuredWorkCategory: "Digital Marketing Campaigns",
     homepageTitle: "Mishthi Art",
     homepageSummary:
       "From inconsistent orders to a more consistent daily sales engine through performance marketing, creative optimisation, and data-driven campaign strategy.",
     homepageImage: {
-      src: "projects/mishthi_art/BlogInsights_Featured_Image_1200by750_px.png",
-      alt: "Mishthi Art"
+      src: "/projects/mishthi_art/homepage_1200x900.png",
+      alt: "Mishthi Art",
     },
     homepageTags: ["17X ROAS", "Consistent Daily Orders", "Stronger Social Engagement"],
     detailHeroTitle: "Turning Inconsistent Orders Into Consistent Growth.",
@@ -154,19 +163,20 @@ export const caseStudies: CaseStudy[] = [
     slug: "moon-glow-beauty-studio-academy",
     clientName: "Moon Glow Beauty Studio & Academy",
     category: "Salon & Beauty Academy • Google Business Profile + Social Media Marketing",
+    featuredWorkCategory: "Digital Marketing Campaigns",
     homepageTitle: "Moon Glow Beauty Studio & Academy",
     homepageSummary:
       "From struggling to attract new clients to generating salon walk-ins and student enquiries through a stronger local presence, social media marketing, and Meta Ads.",
     homepageImage: {
-      src: "projects/moon-glow-beauty-studio-academy/homepage-card.jpg",
-      alt: "Moon Glow Beauty Studio & Academy"
+      src: "/projects/moon-glow-beauty-studio-academy/homepage-1200x900.png",
+      alt: "Moon Glow Beauty Studio & Academy",
     },
     homepageTags: ["New Client Walk-ins", "Google Profile Optimisation", "Academy Student Acquisition"],
     detailHeroTitle: "From Local Visibility To Real-World Growth.",
     detailHeroSubtitle: "Moon Glow Beauty Studio & Academy · Salon · Local Marketing + Meta Ads",
     detailHeroIntro:
       "Strengthening the salon's digital presence to attract new walk-ins while building a paid acquisition channel for the academy.",
-    // No numeric KPIs in the source document — these are qualitative
+    // No numeric KPIs in the source document - these are qualitative
     // outcome badges, not measured figures. Do not add fabricated numbers.
     stats: [
       { value: "New Walk-ins", label: "Acquired" },
@@ -219,7 +229,7 @@ export const caseStudies: CaseStudy[] = [
       "Meta Ads helped the academy reach prospective students and begin acquiring students through paid social campaigns.",
     ],
     showcaseImage: {
-      src: "projects/moon-glow-beauty-studio-academy/showcase-1920x1080.jpg",
+      src: "/projects/moon-glow-beauty-studio-academy/showcase-1920x1080.jpg",
       alt: "Moon Glow Beauty Studio & Academy Google Business Profile and social media presence",
     },
     businessImpact:

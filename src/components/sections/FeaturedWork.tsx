@@ -10,7 +10,7 @@ import Button from "@/components/ui/Button";
 import { categories, projects } from "@/lib/constants/projects";
 
 export default function FeaturedWork() {
-  const [activeCategory, setActiveCategory] = useState<(typeof categories)[number]>("All");
+  const [activeCategory, setActiveCategory] = useState<string>("All");
 
   const filtered =
     activeCategory === "All" ? projects : projects.filter((p) => p.category === activeCategory);
@@ -35,25 +35,31 @@ export default function FeaturedWork() {
           </p>
         </div>
 
-        {/* category filter tabs */}
-        <div className="mt-8 flex gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`shrink-0 whitespace-nowrap rounded-full border px-5 py-2 font-heading text-sm font-semibold transition-colors ${
-                activeCategory === cat
-                  ? "border-accent-primary bg-accent-primary text-bg-primary"
-                  : "border-border text-text-secondary hover:border-accent-primary/50"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {/* category filter tabs - only shown once there are at least two real categories */}
+        {categories.length > 2 && (
+          <div className="mt-8 flex gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`shrink-0 whitespace-nowrap rounded-full border px-5 py-2 font-heading text-sm font-semibold transition-colors ${
+                  activeCategory === cat
+                    ? "border-accent-primary bg-accent-primary text-bg-primary"
+                    : "border-border text-text-secondary hover:border-accent-primary/50"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* image-led grid, stat badge on image, copy below */}
-        <div className="mt-10 grid gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          className={`mt-10 grid gap-x-8 gap-y-16 sm:grid-cols-2 ${
+            filtered.length > 2 ? "lg:grid-cols-3" : "lg:grid-cols-2"
+          }`}
+        >
           {filtered.map((project) => (
             <a key={project.title} href={project.link} className="group block">
               <div className="relative">
@@ -66,7 +72,7 @@ export default function FeaturedWork() {
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
-                {/* stat badge overlaps the image's bottom edge — requires consistent 4:3 crops */}
+                {/* stat badge overlaps the image's bottom edge - requires consistent 4:3 crops */}
                 <div className="absolute -bottom-5 left-6 rounded-full border border-border bg-bg-primary px-4 py-2 shadow-lg">
                   <span className="font-heading text-sm font-bold text-accent-primary">
                     {project.stat}
@@ -81,7 +87,7 @@ export default function FeaturedWork() {
                 <h3 className="mt-2 font-heading text-lg font-bold text-text-primary">
                   {project.title}
                 </h3>
-                <p className="mt-2 font-body text-sm text-text-secondary">
+                <p className="mt-2 line-clamp-3 font-body text-sm text-text-secondary">
                   {project.outcome}
                 </p>
                 <span className="mt-3 inline-flex items-center gap-2 font-heading text-sm font-semibold text-accent-primary transition-colors group-hover:text-accent-secondary">

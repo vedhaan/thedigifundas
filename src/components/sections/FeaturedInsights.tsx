@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faImage } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import { caseStudies } from "@/lib/constants/caseStudies";
@@ -34,7 +34,7 @@ export default function FeaturedInsights() {
           </h2>
         </motion.div>
 
-        {/* real case study cards — sourced from caseStudies.ts, no fabricated data */}
+        {/* real case study cards, sourced from caseStudies.ts, no fabricated data */}
         <div className="mx-auto mt-14 grid w-full gap-6 sm:grid-cols-2">
           {caseStudies.map((cs, i) => (
             <motion.a
@@ -46,10 +46,12 @@ export default function FeaturedInsights() {
               transition={{ duration: 0.45, delay: i * 0.1 }}
               className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-primary transition-colors duration-300 hover:border-accent-primary/40"
             >
-              {/* image placeholder — real creative/logo assets to be swapped
-                  in per the source docs' "Website Team Notes" (avoid stock imagery) */}
               <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden bg-gradient-to-br from-bg-secondary to-bg-primary">
-                <img src={cs.homepageImage} alt={cs.homepageTitle} className="h-full w-full object-cover" />
+                <img
+                  src={cs.homepageImage.src}
+                  alt={cs.homepageImage.alt}
+                  className="h-full w-full object-cover"
+                />
               </div>
 
               <div className="flex flex-1 flex-col p-6">

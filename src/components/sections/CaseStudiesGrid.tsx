@@ -8,7 +8,7 @@ import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import { caseStudies } from "@/lib/constants/caseStudies";
 
-// Deterministic size pattern, not random — scales as more real
+// Deterministic size pattern, not random. Scales as more real
 // case studies are added without breaking the layout math.
 const sizePattern = [
   { colSpan: "lg:col-span-7", rowSpan: "lg:row-span-2", aspect: "aspect-[4/5]" },
@@ -66,7 +66,7 @@ export default function CaseStudiesGrid() {
                   >
                     <img
                       src={imageSrc}
-                      alt={study.homepageTitle}
+                      alt={study.homepageImage.alt}
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;
                         target.style.display = "none";
@@ -95,7 +95,7 @@ export default function CaseStudiesGrid() {
                         {study.homepageTags.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full border border-[#FF8A00]/30 bg-[#0D0D0D]/80 px-3 py-1 font-body text-[11px] font-medium uppercase tracking-wide text-[#FFB347]"
+                            className="rounded-full border border-[#FF8A00]/30 bg-[#FF8A00]/10 px-3 py-1 font-body text-[11px] font-medium uppercase tracking-wide text-[#FFB347]"
                           >
                             {tag}
                           </span>

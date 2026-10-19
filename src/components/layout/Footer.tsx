@@ -4,7 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faLinkedin, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPhone, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import Container from "@/components/ui/Container";
-import { footerNavColumns, socialLinks, contactInfo } from "@/lib/constants/footer";
+import {
+  footerNavColumns,
+  socialLinks,
+  contactInfo,
+  footerTagline,
+  footerAbout,
+} from "@/lib/constants/footer";
 
 const socialIconMap = {
   instagram: faInstagram,
@@ -17,12 +23,10 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-border bg-bg-secondary">
-      {/* ambient gradient wash — replaces flat bg-bg-secondary with actual depth */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg-primary via-bg-secondary to-bg-secondary" />
       <div className="pointer-events-none absolute -left-32 top-0 h-80 w-80 rounded-full bg-accent-primary/[0.06] blur-[120px]" />
       <div className="pointer-events-none absolute -right-32 bottom-0 h-80 w-80 rounded-full bg-accent-secondary/[0.06] blur-[120px]" />
 
-      {/* diagonal line texture, single corner */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-0 top-0 h-72 w-72 opacity-[0.08]"
@@ -34,7 +38,6 @@ export default function Footer() {
         }}
       />
 
-      {/* oversized wordmark — desktop/tablet only, hidden on mobile where it can't fit without clipping */}
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-4 -right-2 hidden max-w-full select-none overflow-hidden bg-gradient-to-br from-accent-primary to-accent-secondary bg-clip-text font-heading font-bold leading-none text-transparent opacity-[0.08] sm:block"
@@ -44,10 +47,11 @@ export default function Footer() {
       </div>
 
       <Container className="relative z-10 !max-w-[1280px] 2xl:!max-w-[1600px] py-16 sm:py-20">
+        {/* Tagline strip — client-provided brand line, not in the original component */}
+
         <div className="grid gap-12 text-left lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-8">
           {/* Brand column */}
           <div>
-            {/* Replace src with your actual logo path — same one used in Navbar.tsx */}
             <Image
               src="/logo.png"
               alt="The Digi Fundas"
@@ -55,9 +59,8 @@ export default function Footer() {
               height={48}
               className="h-10 w-auto object-contain"
             />
-            <p className="mt-4 max-w-xs font-body text-sm text-text-secondary">
-              Helping businesses build stronger brands, sharper marketing, and
-              digital experiences designed for long-term growth.
+            <p className="mt-4 max-w-sm font-body text-sm text-text-secondary">
+              {footerAbout}
             </p>
 
             <div className="mt-6 flex flex-col gap-3 text-sm text-text-secondary">
@@ -111,10 +114,9 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar — now includes legal links */}
         <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 text-left sm:flex-row sm:items-center sm:justify-between">
           <p className="font-body text-xs text-text-secondary">
-            © {year} The Digi Fundas. All rights reserved.
+            © {year} The Digi Fundas. All Rights Reserved.
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <Link href="/terms" className="font-body text-xs text-text-secondary transition-colors hover:text-accent-primary">

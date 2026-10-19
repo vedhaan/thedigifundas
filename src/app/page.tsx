@@ -19,8 +19,8 @@ export default function Home() {
       <ImpactNumbers />
       <FeaturedWork />
       <WhyUs />
-      <Testimonials />
-      <Insights />
+      {/* <Testimonials /> */}
+      {/* <Insights /> */}
       <FinalCta />
     </main>
   );
