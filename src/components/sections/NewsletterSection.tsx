@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
+import { submitForm } from "@/lib/constants/submitForm";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -26,24 +27,30 @@ const perks = [
 export default function NewsletterSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("submitting");
+    if (status === "submitting") return;
+    setErrorMessage(null);
 
-    try {
-      // TODO: wire to a real endpoint — same AJAX pattern as ContactForm.
-      const res = await fetch("https://formspree.io/f/YOUR_NEWSLETTER_FORM_ID", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: JSON.stringify({ name, email }),
-      });
-      if (!res.ok) throw new Error("Submission failed");
+    // Bots fill the hidden field. Pretend it worked and drop the signup.
+    if (honeypot) {
+      setStatus("success");
+      return;
+    }
+
+    setStatus("submitting");
+    const result = await submitForm("newsletter", { name, email });
+
+    if (result.ok) {
       setStatus("success");
       setName("");
       setEmail("");
-    } catch {
+    } else {
+      setErrorMessage(result.message);
       setStatus("error");
     }
   };
@@ -73,7 +80,7 @@ export default function NewsletterSection() {
           className="mx-auto w-full max-w-5xl overflow-hidden rounded-3xl border border-border bg-bg-primary"
         >
           <div className="grid lg:grid-cols-[1.1fr_1fr]">
-            {/* left — value proposition, not just a headline */}
+            {/* left: value proposition, not just a headline */}
             <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary text-bg-primary shadow-lg shadow-accent-primary/20">
                 <FontAwesomeIcon icon={faEnvelopeOpenText} className="h-5 w-5" />
@@ -102,7 +109,7 @@ export default function NewsletterSection() {
               </div>
             </div>
 
-            {/* right — form card, visually distinct panel */}
+            {/* right: form card, visually distinct panel */}
             <div className="flex flex-col justify-center border-t border-border bg-bg-secondary p-8 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
@@ -119,7 +126,7 @@ export default function NewsletterSection() {
                       You&apos;re subscribed
                     </p>
                     <p className="font-body text-sm text-text-secondary">
-                      Thanks for joining — check your inbox for a confirmation.
+                      Thanks for joining. We&apos;ll be in touch with our next update.
                     </p>
                   </motion.div>
                 ) : (
@@ -131,6 +138,18 @@ export default function NewsletterSection() {
                     exit={{ opacity: 0 }}
                     className="flex flex-col gap-3"
                   >
+                    {/* Honeypot, hidden from people and screen readers */}
+                    <input
+                      type="text"
+                      name="_gotcha"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      style={{ position: "absolute", left: "-9999px" }}
+                    />
+
                     <div>
                       <label htmlFor="newsletter-name" className="mb-1.5 block font-body text-xs font-medium text-text-secondary">
                         Name
@@ -139,6 +158,7 @@ export default function NewsletterSection() {
                         id="newsletter-name"
                         type="text"
                         required
+                        autoComplete="name"
                         placeholder="Your name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
@@ -153,6 +173,7 @@ export default function NewsletterSection() {
                         id="newsletter-email"
                         type="email"
                         required
+                        autoComplete="email"
                         placeholder="you@company.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -176,8 +197,8 @@ export default function NewsletterSection() {
                     </button>
 
                     {status === "error" && (
-                      <p className="font-body text-xs text-red-400">
-                        Something went wrong. Please try again.
+                      <p role="alert" className="font-body text-xs text-red-400">
+                        {errorMessage ?? "Something went wrong. Please try again."}
                       </p>
                     )}
 

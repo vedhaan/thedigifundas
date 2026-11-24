@@ -1,9 +1,12 @@
 import ThankYou from "@/components/sections/ThankYou";
+import ThankYouGuard from "@/components/ui/ThankYouGuard";
 
 export default function ThankYouPage() {
   return (
     <main>
-      <ThankYou />
+      <ThankYouGuard>
+        <ThankYou />
+      </ThankYouGuard>
     </main>
   );
 }

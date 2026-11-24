@@ -4,7 +4,7 @@ import Section from "@/components/ui/Section";
 import { collaborations } from "@/lib/constants/collaborations";
 
 export default function SelectedCollaborations() {
-  // Duplicate the array so the marquee loops seamlessly — the CSS animation
+  // Duplicate the array so the marquee loops seamlessly. The CSS animation
   // moves the track by exactly -50%, which only looks continuous if the
   // content is doubled (second half is an identical copy of the first).
   const track = [...collaborations, ...collaborations];
@@ -34,18 +34,23 @@ export default function SelectedCollaborations() {
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-bg-secondary to-transparent sm:w-32" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-bg-secondary to-transparent sm:w-32" />
 
-        <div className="flex w-max animate-marquee gap-4 sm:gap-6">
+        {/* pr matches the gap so the -50% loop point lands exactly on the
+            start of the second copy, with no small jump on every cycle */}
+        <div className="flex w-max animate-marquee gap-4 pr-4 sm:gap-6 sm:pr-6">
           {track.map((logo, i) => (
             <div
               key={`${logo.name}-${i}`}
-              className="flex h-16 w-28 shrink-0 items-center justify-center rounded-xl bg-white p-3 shadow-sm sm:h-24 sm:w-48 sm:rounded-2xl sm:p-6"
+              className="flex h-20 w-36 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-2.5 shadow-sm sm:h-28 sm:w-56 sm:rounded-2xl sm:p-3"
             >
-              <div className="relative h-full w-full">
+              <div
+                className="relative h-full w-full"
+                style={logo.scale ? { transform: `scale(${logo.scale})` } : undefined}
+              >
                 <Image
                   src={logo.src}
                   alt={logo.name}
                   fill
-                  sizes="(max-width: 640px) 112px, 192px"
+                  sizes="(max-width: 640px) 144px, 224px"
                   className="object-contain"
                 />
               </div>

@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCheck, faClock, faUserGroup, faRocket, faUser, faEnvelope,
-    faPhone, faBuilding, faComment, faCircleCheck,
+    faPhone, faBuilding, faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
+import { submitForm } from "@/lib/constants/submitForm";
 
 const services = ["Digital Marketing", "Brand Identity & Design", "Content Creation", "Website Development", "AI Solutions", "Not Sure Yet"];
 const budgetRanges = ["Under ₹25,000", "₹25,000 – ₹50,000", "₹50,000 – ₹1,00,000", "₹1,00,000+", "Prefer Not To Say"];
@@ -18,7 +20,7 @@ const steps = [
     { icon: faRocket, title: "We propose a plan", description: "A tailored approach and next steps, specific to your business." },
 ];
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "submitting" | "error";
 
 function IconInput({
     id, name, type = "text", label, icon, required = false,
@@ -40,19 +42,44 @@ function IconInput({
 }
 
 export default function ContactForm() {
+    const router = useRouter();
     const [status, setStatus] = useState<Status>("idle");
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    function goToThankYou() {
+        // Lets the thank-you page know this visit follows a real submission
+        try {
+            sessionStorage.setItem("enquiry-submitted", "1");
+        } catch {
+            // storage blocked: the thank-you page allows access in that case
+        }
+        router.push("/thank-you");
+    }
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        if (status === "submitting") return;
+        setErrorMessage(null);
         setStatus("submitting");
-        const form = e.currentTarget;
-        const data = new FormData(form);
-        try {
-            const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
-                method: "POST", body: data, headers: { Accept: "application/json" },
-            });
-            if (response.ok) { setStatus("success"); form.reset(); } else { setStatus("error"); }
-        } catch { setStatus("error"); }
+
+        const data = new FormData(e.currentTarget);
+
+        // Bots fill the hidden field. Pretend it worked and drop the enquiry.
+        if (data.get("_gotcha")) {
+            goToThankYou();
+            return;
+        }
+
+        data.set("_subject", `New enquiry: ${data.get("service") || "General"}`);
+
+        const result = await submitForm("contact", data);
+
+        if (result.ok) {
+            goToThankYou();
+        } else {
+            setErrorMessage(result.message);
+            setStatus("error");
+        }
     }
 
     return (
@@ -116,63 +143,64 @@ export default function ContactForm() {
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }} className="relative rounded-3xl p-[1px]" style={{ background: "linear-gradient(135deg, var(--color-border), var(--color-border))" }}>
                         <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-accent-primary/40 via-transparent to-accent-secondary/40 opacity-50" />
                         <div className="relative rounded-3xl bg-bg-primary/80 p-8 backdrop-blur-xl sm:p-10">
-                            <AnimatePresence mode="wait">
-                                {status === "success" ? (
-                                    <motion.div key="success" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center py-16 text-center">
-                                        <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, delay: 0.1 }} className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary text-bg-primary shadow-[0_0_40px_rgba(255,138,0,0.4)]">
-                                            <FontAwesomeIcon icon={faCircleCheck} className="h-9 w-9" />
-                                        </motion.span>
-                                        <h3 className="mt-6 font-heading text-2xl font-bold text-text-primary">Message Sent</h3>
-                                        <p className="mt-2 max-w-sm font-body text-text-secondary">We&apos;ve received your details and will be in touch within 24 hours.</p>
-                                        <button onClick={() => setStatus("idle")} className="mt-6 font-heading text-sm font-semibold text-accent-primary hover:text-accent-secondary">Send another message</button>
-                                    </motion.div>
-                                ) : (
-                                    <motion.form key="form" onSubmit={handleSubmit} initial={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col gap-8">
-                                        <div>
-                                            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-text-secondary">Your Details</span>
-                                            <div className="mt-4 grid gap-5 sm:grid-cols-2">
-                                                <IconInput id="name" name="name" label="Full Name" icon={faUser} required />
-                                                <IconInput id="email" name="email" type="email" label="Email Address" icon={faEnvelope} required />
-                                                <IconInput id="phone" name="phone" type="tel" label="Phone Number" icon={faPhone} required />
-                                                <IconInput id="company" name="company" label="Company Name" icon={faBuilding} />
-                                            </div>
+                            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+                                {/* Honeypot, hidden from people and screen readers */}
+                                <input
+                                    type="text"
+                                    name="_gotcha"
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    aria-hidden
+                                    style={{ position: "absolute", left: "-9999px" }}
+                                />
+
+                                <div>
+                                    <span className="font-heading text-xs font-semibold uppercase tracking-wider text-text-secondary">Your Details</span>
+                                    <div className="mt-4 grid gap-5 sm:grid-cols-2">
+                                        <IconInput id="name" name="name" label="Full Name" icon={faUser} required />
+                                        <IconInput id="email" name="email" type="email" label="Email Address" icon={faEnvelope} required />
+                                        <IconInput id="phone" name="phone" type="tel" label="Phone Number" icon={faPhone} required />
+                                        <IconInput id="company" name="company" label="Company Name" icon={faBuilding} />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <span className="font-heading text-xs font-semibold uppercase tracking-wider text-text-secondary">Project Details</span>
+                                    <div className="mt-4 flex flex-col gap-5">
+                                        <div className="grid gap-5 sm:grid-cols-2">
+                                            <select id="service" name="service" required defaultValue="" className="w-full rounded-xl border border-border bg-bg-secondary px-4 py-3.5 font-body text-text-primary outline-none transition-all focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(255,138,0,0.1)]">
+                                                <option value="" disabled>Service Interested In</option>
+                                                {services.map((s) => <option key={s} value={s}>{s}</option>)}
+                                            </select>
+                                            <select id="budget" name="budget" defaultValue="" className="w-full rounded-xl border border-border bg-bg-secondary px-4 py-3.5 font-body text-text-primary outline-none transition-all focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(255,138,0,0.1)]">
+                                                <option value="" disabled>Monthly Marketing Budget</option>
+                                                {budgetRanges.map((b) => <option key={b} value={b}>{b}</option>)}
+                                            </select>
                                         </div>
 
-                                        <div>
-                                            <span className="font-heading text-xs font-semibold uppercase tracking-wider text-text-secondary">Project Details</span>
-                                            <div className="mt-4 flex flex-col gap-5">
-                                                <div className="grid gap-5 sm:grid-cols-2">
-                                                    <select id="service" name="service" required defaultValue="" className="w-full rounded-xl border border-border bg-bg-secondary px-4 py-3.5 font-body text-text-primary outline-none transition-all focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(255,138,0,0.1)]">
-                                                        <option value="" disabled>Service Interested In</option>
-                                                        {services.map((s) => <option key={s} value={s}>{s}</option>)}
-                                                    </select>
-                                                    <select id="budget" name="budget" defaultValue="" className="w-full rounded-xl border border-border bg-bg-secondary px-4 py-3.5 font-body text-text-primary outline-none transition-all focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(255,138,0,0.1)]">
-                                                        <option value="" disabled>Monthly Marketing Budget</option>
-                                                        {budgetRanges.map((b) => <option key={b} value={b}>{b}</option>)}
-                                                    </select>
-                                                </div>
-
-                                                <div className="group relative">
-                                                    <span className="pointer-events-none absolute left-4 top-4 text-text-secondary transition-colors group-focus-within:text-accent-primary">
-                                                        <FontAwesomeIcon icon={faComment} className="h-4 w-4" />
-                                                    </span>
-                                                    <textarea id="details" name="details" rows={5} required placeholder=" " className="peer w-full rounded-xl border border-border bg-bg-secondary py-3.5 pl-11 pr-4 font-body text-text-primary outline-none transition-all focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(255,138,0,0.1)]" />
-                                                    <label htmlFor="details" className="pointer-events-none absolute left-11 top-4 font-body text-text-secondary transition-all duration-200 peer-focus:-top-2.5 peer-focus:left-3 peer-focus:rounded peer-focus:bg-bg-secondary peer-focus:px-1.5 peer-focus:text-xs peer-focus:text-accent-primary peer-[:not(:placeholder-shown)]:-top-2.5 peer-[:not(:placeholder-shown)]:left-3 peer-[:not(:placeholder-shown)]:rounded peer-[:not(:placeholder-shown)]:bg-bg-secondary peer-[:not(:placeholder-shown)]:px-1.5 peer-[:not(:placeholder-shown)]:text-xs">
-                                                        Tell us about your goals, timeline, and project details
-                                                    </label>
-                                                </div>
-                                            </div>
+                                        <div className="group relative">
+                                            <span className="pointer-events-none absolute left-4 top-4 text-text-secondary transition-colors group-focus-within:text-accent-primary">
+                                                <FontAwesomeIcon icon={faComment} className="h-4 w-4" />
+                                            </span>
+                                            <textarea id="details" name="details" rows={5} required placeholder=" " className="peer w-full rounded-xl border border-border bg-bg-secondary py-3.5 pl-11 pr-4 font-body text-text-primary outline-none transition-all focus:border-accent-primary focus:shadow-[0_0_0_3px_rgba(255,138,0,0.1)]" />
+                                            <label htmlFor="details" className="pointer-events-none absolute left-11 top-4 font-body text-text-secondary transition-all duration-200 peer-focus:-top-2.5 peer-focus:left-3 peer-focus:rounded peer-focus:bg-bg-secondary peer-focus:px-1.5 peer-focus:text-xs peer-focus:text-accent-primary peer-[:not(:placeholder-shown)]:-top-2.5 peer-[:not(:placeholder-shown)]:left-3 peer-[:not(:placeholder-shown)]:rounded peer-[:not(:placeholder-shown)]:bg-bg-secondary peer-[:not(:placeholder-shown)]:px-1.5 peer-[:not(:placeholder-shown)]:text-xs">
+                                                Tell us about your goals, timeline, and project details
+                                            </label>
                                         </div>
+                                    </div>
+                                </div>
 
-                                        <div>
-                                            <button type="submit" disabled={status === "submitting"} className="group relative w-full overflow-hidden rounded-full bg-accent-primary px-8 py-4 font-heading text-base font-semibold text-bg-primary transition-all hover:shadow-[0_10px_30px_-8px_rgba(255,138,0,0.5)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
-                                                <span className="relative">{status === "submitting" ? "Sending..." : "Schedule A Consultation"}</span>
-                                            </button>
-                                            {status === "error" && <p className="mt-4 font-body text-sm text-red-400">Something went wrong. Please try again or email us directly.</p>}
-                                        </div>
-                                    </motion.form>
-                                )}
-                            </AnimatePresence>
+                                <div>
+                                    <button type="submit" disabled={status === "submitting"} className="group relative w-full overflow-hidden rounded-full bg-accent-primary px-8 py-4 font-heading text-base font-semibold text-bg-primary transition-all hover:shadow-[0_10px_30px_-8px_rgba(255,138,0,0.5)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">
+                                        <span className="relative">{status === "submitting" ? "Sending..." : "Schedule A Consultation"}</span>
+                                    </button>
+                                    {status === "error" && (
+                                        <p role="alert" className="mt-4 font-body text-sm text-red-400">
+                                            {errorMessage ?? "Something went wrong. Please try again or email us directly."}
+                                        </p>
+                                    )}
+                                </div>
+                            </form>
                         </div>
                     </motion.div>
                 </div>
