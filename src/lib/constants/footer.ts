@@ -45,14 +45,14 @@ export const footerNavColumns = [
 ];
 
 export const socialLinks = [
-  { label: "Instagram", href: "#", icon: "instagram" },
-  { label: "LinkedIn", href: "#", icon: "linkedin" },
-  { label: "Facebook", href: "#", icon: "facebook" },
+  { label: "Instagram", href: "https://www.instagram.com/thedigifundas", icon: "instagram" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/the-digi-fundas/posts/", icon: "linkedin" },
+  { label: "Facebook", href: "https://www.facebook.com/people/The-Digi-Fundas/61563916225190/", icon: "facebook" },
 ];
 
 // Placeholder values, kept intentionally per instruction — replace before launch.
 export const contactInfo = {
   email: "hello@digifundas.com",
-  phone: "+91 00000 00000",
+  phone: "+91 99789 41293",
   address: "Ahmedabad, Gujarat, India",
 };
