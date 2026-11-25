@@ -52,7 +52,7 @@ export const socialLinks = [
 
 // Placeholder values, kept intentionally per instruction — replace before launch.
 export const contactInfo = {
-  email: "hello@digifundas.com",
+  email: "sales@thedigifundas.com",
   phone: "+91 99789 41293",
   address: "Ahmedabad, Gujarat, India",
 };
